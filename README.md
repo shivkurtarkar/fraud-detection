@@ -19,6 +19,7 @@
 8. [Architecture](#architecture)
 9. [Screenshots](#screenshots)
 10. [Future Work](#future-work)
+11. [Project Evaluation](#project-evaluation)
 
 ---
 
@@ -170,3 +171,7 @@ Future enhancements for this project could include:
 - **Real-Time Fraud Detection**: Implementing real-time fraud detection capabilities.
 - **Data Augmentation**: Collecting more data to further improve model performance.
 - **Ensemble Methods**: Using ensemble learning techniques (e.g., Random Forest, XGBoost) for better prediction results.
+
+
+## Project Evaluation
+[Project Evaluation](./evaluation.md)
