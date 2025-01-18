@@ -181,13 +181,13 @@ The project directory is structured as follows:
      ```
 
 2. **Update the Model Path**
-   - Update the `MODEL_FILE` variable in `services/fraud_detection/api/api.py` to point to the downloaded model file.
+   - Update the `MODEL_FILE` variable in `services/fraud_detection/api/api.py` to point to the downloaded model file.   
 
 3. **Running the Application**
    This project provides three ways to run the application:
    - **Using Docker Compose**
    - **Using Python Virtual Environment**
-   - **Using Kubernetes with Kind** (Refer to [Docker Kubernetes Deployment](#docker-kubernetes-deployment))
+   - **Using Kubernetes with Kind** 
 
 ##### Run Using Docker Compose
 
@@ -197,7 +197,13 @@ The project directory is structured as follows:
 2. **Run Docker Compose**
    - Start the application using the following command:
    ```bash
-   docker-compose up
+   docker-compose up --build
+   ```
+
+3. **Stop Docker Compose**
+   - Start the application using the following command:
+   ```bash
+   docker-compose down
    ```
 
 ##### Run Using Kubernetes
