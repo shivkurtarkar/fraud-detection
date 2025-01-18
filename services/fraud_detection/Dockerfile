@@ -1,6 +1,12 @@
 # Use an official Python base image
 FROM python:3.10-slim
 
+
+ARG MODEL_FILE=models/best_model.pkl
+
+# Set the environment variable, either from the argument or the default value
+ENV MODEL_FILE=${MODEL_FILE}
+
 # Set the working directory
 WORKDIR /app
 
