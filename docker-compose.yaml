@@ -6,7 +6,7 @@ services:
       context: services/fraud_detection
       dockerfile: Dockerfile
     environment:
-      - EXPOSED_PORT=8000
+      # - EXPOSED_PORT=8000
       - MODEL_FILE=models/best_model.pkl
     ports:
       - "8000:8000"  # Maps FastAPI service to port 8000 on the host
