@@ -132,8 +132,16 @@ The project directory is structured as follows:
    ```
 
 ##### Training Model
+1. **Add kaggle keys to .kaggle**
+    Refer [christianjmills post](https://christianjmills.com/posts/kaggle-obtain-api-key-tutorial/) to get more info on how to add kagle token to your system
 
-1. **Download Dataset Files**
+    ```~/.kaggle/kaggle.json
+    {
+        "username": "username",
+        "key":"key_xsfasfaf"
+    }
+    ```
+2. **Download Dataset Files**
    - After setting up the virtual environment, update the Makefile with your environment name and run:
    ```bash
    make activate_env
@@ -141,17 +149,17 @@ The project directory is structured as follows:
    make download_data
    ```
 
-2. **Update File Paths**
+3. **Update File Paths**
    - Ensure the file paths in your notebooks or scripts are correctly pointing to the `/data` directory if paths have changed.
 
-3. **Run Exploratory Data Analysis (EDA)**
+4. **Run Exploratory Data Analysis (EDA)**
    - Navigate to the EDA folder and run the EDA notebook:
    ```bash
    cd notebooks/eda
    jupyter notebook eda.ipynb
    ```
 
-4. **Train the Model**
+5. **Train the Model**
    - Navigate to the modeling directory and execute the model training script:
    ```bash
    cd notebooks/modeling
