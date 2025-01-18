@@ -12,12 +12,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY api .
 # COPY tests ./tests
 
-ENV EXPOSED_PORT=8000
+# ENV EXPOSED_PORT=5000
 
 # Expose the port FastAPI will run on
-EXPOSE $EXPOSED_PORT
+EXPOSE 8000
 
 
 # Default command to run FastAPI
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "${EXPOSED_PORT}"]
-# CMD ["uvicorn", "app", "--host", "0.0.0.0", "--port", "5000"]
+# CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "${EXPOSED_PORT}"]
+# CMD echo ${EXPOSED_PORT}
+# CMD ["echo", "uvicorn", "api:app", "--host", "0.0.0.0", "--port", $EXPOSED_PORT]
+# CMD uvicorn api:app --host 0.0.0.0 --port $EXPOSED_PORT
+
+CMD ["gunicorn", "api:app", "-b", "0.0.0.0:8000"]
