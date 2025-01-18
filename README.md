@@ -43,6 +43,7 @@ This project addresses the problem by building a machine learning model capable 
 ---
 
 ## Dataset Description
+kaggle dataset: [fraud-detection](https://www.kaggle.com/datasets/kartik2112/fraud-detection/data)
 
 The dataset for this project is `fraudTrain.csv`, which contains transaction data with various features. These features are used to train the model to identify patterns associated with fraudulent behavior. The dataset includes:
 
