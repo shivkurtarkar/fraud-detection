@@ -94,7 +94,7 @@ The project directory is structured as follows:
 │   ├── api
 │   └── frontend
 ├── README.md
-
+```
 ---
 
 ### 1. Setup
