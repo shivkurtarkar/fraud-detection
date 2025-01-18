@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: prod-
+
+resources:
+- ../../base
+- ingress.yaml
+
+configMapGenerator:
+  - name: fraud-detection-frontend-config
+    literals:
+      - API_URL=http://prod-fraud-detection-api:8000
+
+images:
+- name: fraud-detection-frontend
+  newName: shivamkurtarkar/fraud-detection-frontend
+  newTag: 8101b6e
+
