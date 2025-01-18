@@ -1,2 +1,18 @@
+ipykernel
+
 # kagglehub
 kaggle
+
+##
+pandas
+numpy
+matplotlib
+seaborn
+
+scipy
+scikit-learn
+
+statsmodels
+xgboost
+
+scikit-optimize
