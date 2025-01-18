@@ -265,6 +265,8 @@ The project directory is structured as follows:
 
 ## Model Report
 
+[TODO]: need to update
+
 Once the model is trained, a detailed model evaluation report will be provided. The report includes:
 
 - Model selection process
@@ -272,7 +274,7 @@ Once the model is trained, a detailed model evaluation report will be provided. 
 - Performance metrics (accuracy, precision, recall, F1-score)
 - Model confusion matrix
 
-You can view the detailed report [here](./model_report.pdf).
+You can view the detailed report [here](./model_report.md).
 
 ---
 
@@ -291,13 +293,8 @@ The architecture of the system involves the following key components:
 
 Below are some screenshots of the project:
 
-- **Data Visualization (EDA)**
 
-![EDA Screenshot](./screenshots/eda.png)
-
-- **Model Evaluation Results**
-
-![Model Evaluation](./screenshots/model_results.png)
+![Application](./images/credit_card_transaction_predictoin.png)
 
 ---
 
