@@ -174,4 +174,10 @@ cython_debug/
 #
 *.csv
 data/*
+
 todo.md
+eda_todo.md
+eda_todo_example.md
+
+output/*
+*.pkl
