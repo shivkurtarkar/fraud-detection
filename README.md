@@ -63,65 +63,185 @@ The main objective of this project is to develop a machine learning model to aut
 
 The project directory is structured as follows:
 
+## Project Directory
 ```
-fraud-detection/
-│
-├── data/                # Dataset files
-├── notebooks/           # Jupyter notebooks for exploratory data analysis
-├── src/                 # Source code (data preprocessing, model training, etc.)
-│   ├── model.py         # Model development code
-│   ├── utils.py         # Utility functions
-├── Dockerfile           # Docker file for containerization
-├── docker-compose.yml   # Docker Compose file for running containers
-├── kubernetes/          # Kubernetes deployment files
-│   └── deployment.yaml  # Kubernetes deployment config
-├── Makefile             # Makefile for automating deployment tasks
-├── requirements.txt     # Python dependencies
-└── README.md            # Project README file
-```
+├── data                      # contains data (Download from kaggle)
+│   ├── fraudTest.csv
+│   ├── fraudTrain.csv
+├── notebooks
+│   ├── eda
+│   │   ├── eda.ipynb         # Exploratory Data Analysis notebook  
+│   ├── modeling
+│   │   ├── train_v6.py       # Hyperparameter tuning script  
+│   └── requirements.txt
+├── output                    # output of model training script is saved here
+├── services
+│   ├── fraud_detection
+│   │   ├── api
+│   │   │   ├── api.py
+│   │   │   ├── models        # dir for models for deployment
+│   │   │   │   └── best_model.pkl  # add from release
+│   │   │   ├── requirements.txt
+│   │   │   └── run.sh        # script for running using python env
+│   │   ├── Dockerfile
+│   │   ├── integration       # Integration test scripts
+│   │   └── tests             # API unit testing scripts  
+│   └── frontend              # Streamlit application to consume the 
+├── docker-compose.yaml       # docker compose file
+├── kind.config               # kind config
+├── Makefile                  # make file
+├── manifest                  # dir contains kubernetes manifest
+│   ├── api
+│   └── frontend
+├── README.md
 
 ---
 
-## Setup
+### 1. Setup
 
-### 1. Model Development
+#### 1.1 Model Development
 
-#### a. EDA Setup
-- Perform exploratory data analysis (EDA) to understand the dataset, including the distribution of features and class imbalance.
-- Visualize feature distributions, correlations, and outliers.
-  
-#### b. Training Model
-- Train multiple machine learning models (Logistic Regression, Decision Trees, Random Forests, etc.) using the prepared dataset.
-- Evaluate models based on metrics such as accuracy, precision, recall, and F1-score.
-- Fine-tune the hyperparameters for better performance.
+##### EDA Setup
 
-### 2. Deployment
+1. **Create a Virtual Environment**
+   - Run the following command to create a virtual environment. Replace `myenv` with your desired environment name:
+   ```bash
+   python -m venv myenv
+   ```
 
-#### a. Run Locally
-- Install dependencies from `requirements.txt` and run the model on your local machine.
-  
-#### b. Run using Docker Compose
-- Dockerize the application by using the `Dockerfile` and run the model using `docker-compose.yml` to manage services.
+2. **Activate the Virtual Environment**
+   - **On Windows:**
+     ```bash
+     myenv\Scripts\activate
+     ```
+   - **On macOS/Linux:**
+     ```bash
+     source myenv/bin/activate
+     ```
 
-#### c. Run using Kubernetes
-- Set up the environment using Kubernetes for scaling and managing the deployment.
-- Apply the Kubernetes deployment configurations from the `kubernetes/` directory.
+3. **Install Dependencies**
+   - Install the required packages by running:
+   ```bash
+   pip install -r notebooks/requirements.txt
+   ```
+
+4. **(Optional) Register Kernel for VS Code**
+   - To register the virtual environment as a Jupyter kernel for VS Code:
+   ```bash
+   python -m ipykernel install --user --name=myenv --display-name "Python (myenv)"
+   ```
+
+##### Training Model
+
+1. **Download Dataset Files**
+   - After setting up the virtual environment, update the Makefile with your environment name and run:
+   ```bash
+   make activate_env
+   make setup_mldev
+   make download_data
+   ```
+
+2. **Update File Paths**
+   - Ensure the file paths in your notebooks or scripts are correctly pointing to the `/data` directory if paths have changed.
+
+3. **Run Exploratory Data Analysis (EDA)**
+   - Navigate to the EDA folder and run the EDA notebook:
+   ```bash
+   cd notebooks/eda
+   jupyter notebook eda.ipynb
+   ```
+
+4. **Train the Model**
+   - Navigate to the modeling directory and execute the model training script:
+   ```bash
+   cd notebooks/modeling
+   python train_v6.py
+   ```
 
 ---
-### 3. Build Deployment Using Makefile
 
-To simplify the deployment process, use the `Makefile` to automate tasks such as building the Docker image, starting the Docker container, and deploying to Kubernetes. The commands inside the Makefile may look like this:
+#### 1.2 Deployment
 
-```makefile
-build:       # Build Docker image
-    docker build -t fraud-detection .
+##### Run Locally
 
-run:         # Run Docker container
-    docker-compose up
+1. **Download and Add the Model**
+   - Download the model file from the release section or after training, you can find the model in the output directory.
+   - Place the model file in the following directory:
+     ```
+     services/fraud_detection/api/models
+     ```
 
-deploy:      # Deploy to Kubernetes
-    kubectl apply -f kubernetes/deployment.yaml
-```
+2. **Update the Model Path**
+   - Update the `MODEL_FILE` variable in `services/fraud_detection/api/api.py` to point to the downloaded model file.
+
+3. **Running the Application**
+   This project provides three ways to run the application:
+   - **Using Docker Compose**
+   - **Using Python Virtual Environment**
+   - **Using Kubernetes with Kind** (Refer to [Docker Kubernetes Deployment](#docker-kubernetes-deployment))
+
+##### Run Using Docker Compose
+
+1. **Install Docker and Docker Compose**
+   - Make sure you have Docker and Docker Compose installed.
+
+2. **Run Docker Compose**
+   - Start the application using the following command:
+   ```bash
+   docker-compose up
+   ```
+
+##### Run Using Kubernetes
+
+1. **Install Required Tools**
+   - Install Docker, Kind (Kubernetes in Docker), and Make on your machine.
+
+2. **Initialize Kind Cluster**
+   - Run the following command to initialize the Kind cluster:
+   ```bash
+   make kind-init
+   ```
+
+3. **Deploy All Development Services**
+   - Deploy the necessary development services:
+   ```bash
+   make dev_deploy_all
+   ```
+
+4. **Test the API**
+   - Wait for both the API and frontend services to be in a running state. You can check the status with:
+   ```bash
+   kubectl get po
+   ```
+   - Run integration tests to ensure the API is working:
+   ```bash
+   make dev_api_integation_test
+   ```
+
+5. **Access the Application**
+   - After deployment, access the application at [http://localhost](http://localhost).
+
+6. **Delete the Cluster**
+   - To clean up resources and delete the Kind cluster:
+   ```bash
+   make kind-delete
+   ```
+
+---
+
+#### 1.3 Build Deployment Using Makefile
+
+1. **Build and Deploy Services**
+   - After initializing the Kind cluster, you can build and deploy all services with:
+   ```bash
+   make dev_deploy_all_full
+   ```
+
+2. **Run Make Help**
+   - For more available commands, run:
+   ```bash
+   make help
+   ```
 
 ---
 
