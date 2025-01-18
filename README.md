@@ -1,5 +1,8 @@
 # Fraud Detection Project
 
+![fraud detection](images/fraud_detection.png)
+
+
 ## Table of Contents
 1. [Overview](#overview)
 2. [Problem Statement](#problem-statement)
