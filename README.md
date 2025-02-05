@@ -232,6 +232,9 @@ The project directory is structured as follows:
    ```bash
    kubectl get po
    ```
+
+   - Update API_URL to `API_URL = "http://localhost:30007"` in `services/fraud_detection/integration/test_integration.py`. else integration tests will throw errors
+
    - Run integration tests to ensure the API is working:
    ```bash
    make dev_api_integation_test
@@ -296,6 +299,20 @@ Below are some screenshots of the project:
 
 
 ![Application](./images/credit_card_transaction_predictoin.png)
+
+
+Deployment 
+
+![Deployment 1](./images/deployment_0.png)
+-> setting up kind cluster
+
+![Deployment 2](./images/deployment_1.png)
+-> deploying services and testing
+
+![Deployment 3](./images/deployment_2.png)
+-> deleting cluster
+
+for detailed log refer to [Deployment terminal logs](./deployment_terminal.md)
 
 ---
 
